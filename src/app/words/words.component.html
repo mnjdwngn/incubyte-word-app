@@ -1,0 +1,46 @@
+<div class="container">
+  <button type="button" class="btn btn-primary centerBtn" (click)="open(content, null)">Add Word</button>
+</div>
+
+
+<div *ngIf="allWords && allWords.length == 0">
+  <h2>There is no word. Please add new word.</h2>
+</div>
+
+<div *ngIf="allWords && allWords.length > 0">
+  <table class="table table-striped">
+    <thead>
+      <th>Word</th>
+      <th colspan="2">Action</th>
+    </thead>
+    <tbody>
+      <tr *ngFor="let word of allWords">
+        <td>{{word.word}}</td>
+        <td (click)="open(content, word)">Edit</td>
+        <td (click)="deleteWord(word.id)">Delete</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">{{buttonType == "Save" ? "Add Word" : "Update Word"}}</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form #editIdeaForm="ngForm" (submit)="saveWord(); modal.dismiss('Cross click');">
+      <div class="form-group">
+        <input type="text" name="title" class="form-control" required [(ngModel)]=selectedWord />
+      </div>
+      <input type="submit" class="btn btn-success btn-save" value="{{buttonType}}" style="margin-top: 20px;"/>
+    </form>
+  </div>
+  <div class="modal-footer">
+
+  </div>
+</ng-template>
